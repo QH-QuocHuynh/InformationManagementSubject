@@ -69,7 +69,33 @@ Nguồn: [MongoDB Inc. Performance Reports](https://investors.mongodb.com/news-r
 
 - **_Tóm tắt:_** các mục tiêu sẽ tập trung vào việc cập nhật kiến thức và nâng cao kỹ năng áp dụng công nghệ cơ sở dữ liệu mới vào hệ thống hiện có, nhằm tối ưu hóa và nâng cao hiệu suất của các ứng dụng. `MongoDB` cung cấp khả năng quản lý dữ liệu phi cấu trúc hiệu quả, giúp lập trình viên giải quyết các bài toán phức tạp liên quan đến dữ liệu.
 
----
+## 1.2. Khi nào bạn nên sử dụng MongoDB?
+- MongoDB là một lựa chọn lý tưởng trong các tình huống yêu cầu khả năng mở rộng mạnh mẽ, tính linh hoạt trong cấu trúc dữ liệu, và hiệu suất cao cho các ứng dụng thời gian thực. Việc sử dụng MongoDB trong các hệ thống lớn, phức tạp, và yêu cầu hiệu suất tức thời không chỉ giúp nâng cao trải nghiệm người dùng mà còn đảm bảo khả năng mở rộng và phát triển lâu dài của hệ thống.
+
+Bạn nên sử dụng MongoDB trong các trường hợp sau:
+
+#### Trường hợp 1: Hệ thống cần mở rộng ngang để quản lý dữ liệu lớn và số lượng người dùng đông đảo.
+
+Ví dụ: 
+- Khi bạn cần mở rộng quy mô hệ thống một cách hiệu quả, đặc biệt là với các ứng dụng đòi hỏi lưu trữ và xử lý dữ liệu khổng lồ.
+- Trong các hệ thống yêu cầu khả năng phân tán dữ liệu trên nhiều khu vực địa lý khác nhau để tối ưu hóa hiệu suất.
+
+#### Trường hợp 2: Dữ liệu không có cấu trúc cố định và yêu cầu sự linh hoạt trong việc lưu trữ và thay đổi mô hình dữ liệu.
+
+Ví dụ: 
+
+- Khi bạn phát triển ứng dụng với dữ liệu có cấu trúc linh hoạt, hoặc cấu trúc dữ liệu có thể thay đổi theo thời gian.
+- Trong các dự án mà việc lưu trữ nhiều loại dữ liệu phức tạp, không đồng nhất trong cùng một cơ sở dữ liệu là cần thiết.
+
+#### Trường hợp 3: Các ứng dụng yêu cầu truy xuất dữ liệu nhanh chóng, phản hồi theo thời gian thực, và khả năng xử lý khối lượng giao dịch đồng thời lớn.
+
+Ví dụ: 
+- Khi xây dựng các ứng dụng cần phản hồi tức thì, chẳng hạn như hệ thống theo dõi vị trí, ứng dụng trò chuyện trực tuyến, hoặc các dịch vụ yêu cầu tính tức thời cao.
+- Trong các hệ thống có số lượng người dùng truy cập và cập nhật dữ liệu liên tục, đòi hỏi hiệu suất truy xuất nhanh chóng.
+
+MongoDB, với các tính năng mạnh mẽ và linh hoạt, đang trở thành một lựa chọn hàng đầu cho các lập trình viên và doanh nghiệp muốn xây dựng các ứng dụng hiện đại, hiệu suất cao, và dễ dàng mở rộng trong tương lai.
+
+
 
 ## 2. `MongoDB` là gì? và một số khái niệm cơ bản.
 
