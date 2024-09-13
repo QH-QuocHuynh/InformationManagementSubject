@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+
+  uit_mongodb:
+    image: mongo:6.0
+    container_name: uit_mongodb_hocdang
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DB_PASS
+    ports:
+      - 39003:27017
+    volumes:
+      - uit_volume:/data/db
+    networks:
+      uit_network:
+        ipv4_address: 10.0.5.2
+
+  uit_api:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    image: uit_api
+    container_name: uit_api_hocdang
+    ports:
+      - 33002:33002
+    volumes:
+      - ./:/app
+    networks:
+      uit_network:
+        ipv4_address: 10.0.5.3
+
+networks:
+  uit_network:
+    name: uit_network
+    driver: bridge
+    ipam:
+     config:
+        - subnet: 10.0.5.0/24
+          gateway: 10.0.5.1
+
+volumes:
+  uit_volume:
+    name: uit_volume
+
+
+
+
+
+
+
+
+
+    
