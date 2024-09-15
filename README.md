@@ -172,17 +172,131 @@ Ví dụ: Một document có thể trông như sau:
 
 - Khái niệm: Sharding là kỹ thuật phân chia dữ liệu trên nhiều server để cải thiện khả năng mở rộng và hiệu năng của hệ thống. `MongoDB` hỗ trợ sharding để phân phối dữ liệu trên nhiều máy chủ và duy trì hiệu suất tốt khi dữ liệu lớn [MongoDB Documentation](https://www.mongodb.com/docs/).
 
----
-<!-- Phần chưa thực hiện  -->
-- _(Tìm hiểu về định dạng BSON và mối liên hệ với JSON. ([CHƯA THỰC HIỆN](#))_
-- _(Viết phần giải thích khái niệm MongoDB và BSON. ([CHƯA THỰC HIỆN](#))_
 
+### 2.3. Tìm hiểu về định dạng BSON và mối liên hệ với JSON
+#### 2.3.1. Khái niệm về Định dạng BSON
+- BSON (Binary JSON) là một định dạng lưu trữ dữ liệu nhị phân được thiết kế đặc biệt để mở rộng và cải thiện JSON (JavaScript Object Notation). BSON cung cấp một cách hiệu quả hơn để lưu trữ và truyền tải dữ liệu cấu trúc, nhờ vào việc sử dụng định dạng nhị phân thay vì văn bản.
+
+Các Đặc Điểm Chính của BSON:
+- Nhị phân hóa (Binary Format): BSON lưu trữ dữ liệu dưới dạng nhị phân, giúp tiết kiệm không gian lưu trữ và tăng tốc độ truyền tải dữ liệu so với định dạng văn bản như JSON. Định dạng nhị phân giúp giảm chi phí phân tích dữ liệu và cải thiện hiệu suất truy xuất.
+
+- Tính mở rộng (Extensibility): BSON hỗ trợ nhiều kiểu dữ liệu hơn JSON, bao gồm các loại dữ liệu nhị phân, ngày giờ, và các đối tượng phức tạp hơn. Điều này cho phép lưu trữ các loại dữ liệu đa dạng và phức tạp mà JSON không hỗ trợ trực tiếp.
+
+- Hỗ trợ kích thước dữ liệu lớn (Large Data Size Support): BSON có khả năng lưu trữ các đối tượng lớn hơn và các mảng dữ liệu khổng lồ, điều này là một lợi thế trong các ứng dụng yêu cầu quản lý khối lượng dữ liệu lớn và phức tạp.
+
+#### 2.3.2. Nguồn gốc và Lịch sử Ra đời của BSON
+- BSON được phát triển bởi MongoDB Inc. để cải thiện hiệu suất lưu trữ và truyền tải dữ liệu cho hệ quản trị cơ sở dữ liệu MongoDB. MongoDB là một hệ cơ sở dữ liệu NoSQL phổ biến, được thiết kế để xử lý dữ liệu phi cấu trúc và bán cấu trúc. BSON được giới thiệu vào năm 2009 cùng với việc phát hành MongoDB phiên bản đầu tiên.
+
+- Mục tiêu chính của việc phát triển BSON là cung cấp một định dạng dữ liệu nhị phân có thể dễ dàng tích hợp với MongoDB và các hệ thống cơ sở dữ liệu khác, đồng thời cung cấp các khả năng mở rộng và hiệu suất tốt hơn so với định dạng JSON truyền thống.
+
+#### 2.3.3. Ví dụ về BSON
+Dưới đây là một ví dụ về cách dữ liệu được lưu trữ dưới định dạng BSON và JSON:
+
+Dữ liệu JSON
+```
+{
+  "name": "Alice",
+  "age": 30,
+  "isStudent": false,
+  "courses": ["Mathematics", "Computer Science"],
+  "address": {
+    "street": "123 Elm Street",
+    "city": "Springfield",
+    "postalCode": "12345"
+  }
+}
+
+```
+**Dữ liệu BSON:**
+
+Dữ liệu BSON của cùng một đối tượng sẽ được lưu trữ dưới dạng nhị phân, và không thể được đọc trực tiếp bằng mắt như JSON. Tuy nhiên, dưới đây là mô tả tổng quát về cấu trúc của dữ liệu BSON tương ứng:
+
+- Type Identifier: Xác định kiểu dữ liệu của mỗi phần tử (chuỗi, số, boolean, đối tượng, mảng).
+- Length: Kích thước của dữ liệu trong byte.
+- Data: Nội dung dữ liệu được mã hóa thành định dạng nhị phân.
+**Ví dụ BSON (Mô tả cấu trúc nhị phân)**
++ Name: "Alice" (dưới dạng chuỗi nhị phân với chỉ định kiểu dữ liệu).
++ Age: 30 (dưới dạng số nguyên 32-bit).
++ IsStudent: false (dưới dạng giá trị boolean).
++ Courses: ["Mathematics", "Computer Science"] (dưới dạng mảng chuỗi nhị phân).
++ Address: {
++ Street: "123 Elm Street" (dưới dạng chuỗi nhị phân).
++ City: "Springfield" (dưới dạng chuỗi nhị phân).
++ PostalCode: "12345" (dưới dạng chuỗi nhị phân).
+
+
+#### 2.3.4. Mối Liên hệ giữa BSON và JSON
+**Tương đồng:**
+
+- Cấu trúc Dữ liệu: Cả BSON và JSON đều sử dụng cấu trúc dữ liệu dạng key-value để lưu trữ dữ liệu. Điều này giúp cả hai định dạng đều dễ hiểu và dễ sử dụng cho các nhà phát triển.
+- Đơn giản và Linh hoạt: JSON và BSON đều hỗ trợ các kiểu dữ liệu cơ bản như chuỗi, số, boolean, mảng và đối tượng.
+**Khác biệt:**
+
+- Định dạng: JSON là định dạng văn bản dễ đọc và viết cho con người, trong khi BSON là định dạng nhị phân, được tối ưu hóa cho hiệu suất lưu trữ và truyền tải.
+- Kiểu dữ liệu: BSON hỗ trợ nhiều kiểu dữ liệu hơn JSON, bao gồm các loại dữ liệu nhị phân và ngày giờ, cùng với khả năng lưu trữ các đối tượng và mảng lớn hơn.
+- Kích thước Dữ liệu: BSON thường có kích thước nhỏ hơn JSON khi lưu trữ dữ liệu nhờ vào định dạng nhị phân.
+- Hiệu suất: BSON cải thiện hiệu suất truy xuất và lưu trữ dữ liệu, đặc biệt trong các hệ thống như MongoDB, nhờ vào các phép toán nhị phân và khả năng lưu trữ hiệu quả.
+
+
+<!-- Phần chưa thực hiện  -->
 ## 3. So sánh `MongoDB` với SQL
+- MongoDB và SQL (Structured Query Language) đại diện cho hai loại hệ quản trị cơ sở dữ liệu khác nhau: NoSQL và quan hệ. MongoDB là một cơ sở dữ liệu NoSQL, trong khi SQL liên quan đến các hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Mặc dù cả hai đều được sử dụng để lưu trữ và quản lý dữ liệu, chúng có nhiều điểm khác biệt cơ bản về thiết kế và chức năng. Báo cáo này sẽ phân tích những điểm khác biệt chính giữa MongoDB và các hệ RDBMS, đặc biệt tập trung vào khả năng mở rộng và tính không cần schema của MongoDB.
 
-- _Nghiên cứu điểm khác biệt giữa MongoDB và SQL. ([CHƯA THỰC HIỆN](#))_
-- _Tìm hiểu khả năng mở rộng và tính không cần schema của MongoDB. ([CHƯA THỰC HIỆN](#))_
-- _Viết phần so sánh MongoDB với SQL. ([CHƯA THỰC HIỆN](#))_
-<!-- Phần chưa thực hiện  -->
+### 3.1. Điểm khác biệt chính giữa MongoDB và SQL
+#### 3.1.1 Kiến trúc và mô hình dữ liệu
+**MongoDB:**
+
+- Mô hình dữ liệu: MongoDB sử dụng mô hình lưu trữ dữ liệu dạng tài liệu (document-oriented). Dữ liệu được lưu trữ dưới dạng tài liệu BSON (Binary JSON), cho phép lưu trữ các kiểu dữ liệu phức tạp và không đồng nhất.
+- Cấu trúc dữ liệu: Tài liệu trong MongoDB có thể chứa các trường khác nhau, cho phép lưu trữ dữ liệu phi cấu trúc hoặc dữ liệu có cấu trúc thay đổi.
+**SQL:**
+
+- Mô hình dữ liệu: Các hệ quản trị cơ sở dữ liệu quan hệ sử dụng mô hình dữ liệu dạng bảng (table-based). Dữ liệu được lưu trữ trong các bảng với hàng và cột.
+- Cấu trúc dữ liệu: Các bảng trong SQL có cấu trúc cố định và phải tuân theo một schema được xác định trước. Mỗi hàng trong bảng phải tuân theo cấu trúc cột đã định nghĩa.
+#### 3.1.2. Khả năng mở rộng và tính không cần schema
+#### 3.1.2.1 Khả năng mở rộng
+
+**MongoDB:**
+
+- Mở rộng theo chiều ngang: MongoDB hỗ trợ mở rộng theo chiều ngang (horizontal scaling) thông qua sharding. Sharding giúp phân phối dữ liệu trên nhiều máy chủ, cải thiện hiệu suất và khả năng chịu tải của hệ thống.
+- Sharding: Dữ liệu được phân phối thành các shards (phân đoạn), với mỗi shard có thể lưu trữ một phần của dữ liệu. Mongos (router) điều phối các yêu cầu từ ứng dụng đến các shard phù hợp.
+
+**SQL:**
+
+- Mở rộng theo chiều dọc: Các hệ RDBMS truyền thống thường sử dụng mở rộng theo chiều dọc (vertical scaling), nghĩa là nâng cấp phần cứng của máy chủ hiện tại (CPU, RAM, ổ cứng).
+- Khả năng mở rộng hạn chế: Mở rộng theo chiều ngang thường phức tạp hơn trong các hệ RDBMS truyền thống, đòi hỏi phải thực hiện các thay đổi lớn về cấu trúc và quản lý dữ liệu.
+
+#### 3.1.2.2 Tính không cần schema
+**MongoDB:**
+
+- Không cần schema: MongoDB không yêu cầu một schema cố định cho dữ liệu. Tính không cần schema cho phép các tài liệu trong cùng một tập hợp (collection) có cấu trúc khác nhau.
+- Tính linh hoạt: Điều này mang lại sự linh hoạt cao hơn trong việc lưu trữ và quản lý dữ liệu, cho phép dễ dàng thay đổi cấu trúc dữ liệu mà không ảnh hưởng đến toàn bộ hệ thống.
+**SQL:**
+
+- Cần schema: Các hệ RDBMS yêu cầu phải định nghĩa schema trước khi lưu trữ dữ liệu. Schema bao gồm các bảng, cột, kiểu dữ liệu và ràng buộc.
+- Cấu trúc cố định: Mọi thay đổi về cấu trúc dữ liệu yêu cầu phải thay đổi schema và có thể cần thực hiện các phép chuyển đổi phức tạp, ảnh hưởng đến hiệu suất và tính khả dụng.
+### 3.1.4. Ngôn ngữ truy vấn
+**MongoDB:**
+
+- Ngôn ngữ truy vấn: MongoDB sử dụng cú pháp truy vấn riêng của mình, dựa trên JSON. Các truy vấn được thực hiện bằng cách sử dụng các phương thức và biểu thức JSON.
+- Tính năng truy vấn: Mặc dù MongoDB hỗ trợ các loại truy vấn phức tạp, cú pháp và cách sử dụng có thể khác biệt so với SQL truyền thống.
+**SQL:**
+
+- Ngôn ngữ truy vấn: SQL sử dụng ngôn ngữ truy vấn cấu trúc (Structured Query Language) để thực hiện các phép toán trên cơ sở dữ liệu. SQL cung cấp một cách thức tiêu chuẩn hóa để thực hiện các truy vấn, thao tác dữ liệu và định nghĩa cấu trúc.
+- Cú pháp truy vấn: SQL có cú pháp cụ thể cho các phép toán như SELECT, INSERT, UPDATE, DELETE, JOIN, GROUP BY, v.v.
+### 3.1.5. Tính nhất quán và phân phối
+**MongoDB:**
+
+- Nhất quán cuối cùng: MongoDB thường sử dụng mô hình nhất quán cuối cùng (eventual consistency) trong môi trường phân phối, có nghĩa là dữ liệu có thể không đồng bộ ngay lập tức giữa các bản sao.
+- Khả năng phục hồi: MongoDB cung cấp tính năng sao lưu và phục hồi để bảo vệ dữ liệu trong trường hợp sự cố.
+**SQL:**
+
+- Nhất quán ngay lập tức: Các hệ RDBMS thường đảm bảo nhất quán ngay lập tức (immediate consistency) và hỗ trợ các giao dịch ACID (Atomicity, Consistency, Isolation, Durability) để đảm bảo tính toàn vẹn dữ liệu.
+- Giao dịch: SQL cung cấp cơ chế giao dịch mạnh mẽ để xử lý các phép toán phức tạp và bảo đảm tính chính xác của dữ liệu.
+
+**Kết luận**
+- MongoDB và các hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) có nhiều điểm khác biệt quan trọng về cách thức lưu trữ, quản lý dữ liệu, và khả năng mở rộng. MongoDB nổi bật với khả năng mở rộng linh hoạt và tính không cần schema, cho phép ứng dụng dễ dàng xử lý khối lượng dữ liệu lớn và thay đổi cấu trúc dữ liệu. Ngược lại, các hệ RDBMS thường cung cấp tính nhất quán ngay lập tức và khả năng xử lý giao dịch mạnh mẽ nhưng có thể gặp khó khăn trong việc mở rộng và thay đổi cấu trúc dữ liệu. Việc lựa chọn giữa MongoDB và các hệ RDBMS phụ thuộc vào nhu cầu cụ thể của ứng dụng và yêu cầu về dữ liệu.
+
+
 ---
 
 # II. KIẾN THỨC CƠ BẢN VỀ `MONGODB`
