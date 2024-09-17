@@ -300,8 +300,164 @@ Dữ liệu BSON của cùng một đối tượng sẽ được lưu trữ dư�
 ---
 
 # II. KIẾN THỨC CƠ BẢN VỀ `MONGODB`
+## 1. Nghiên cứu kiến trúc tổng quan của MongoDB
+
+MongoDB sử dụng một số kiến trúc cơ bản để quản lý và mở rộng dữ liệu trong các hệ thống lớn. Dưới đây là các kiến trúc phổ biến:
+
+- **Replica Set (Nhân bản dữ liệu):** Đây là kiến trúc quan trọng giúp đảm bảo tính khả dụng cao bằng cách tạo nhiều bản sao của dữ liệu trên các máy chủ khác nhau. Nếu primary node gặp sự cố, một secondary node có thể tự động thay thế để tiếp tục các thao tác. Điều này đảm bảo không bị gián đoạn khi xảy ra lỗi hệ thống.
+
+- **Ví dụ thực tế:**
+
+- eBay sử dụng Replica Set để đảm bảo hoạt động ổn định của cơ sở dữ liệu toàn cầu, giúp họ xử lý lượng giao dịch khổng lồ hàng ngày mà không lo ngại về việc ngừng hoạt động khi có sự cố tại một máy chủ.
+- **Sharding (Phân mảnh dữ liệu):** Kiến trúc này cho phép MongoDB phân chia dữ liệu thành nhiều phần nhỏ gọi là shards, giúp cải thiện hiệu năng và khả năng mở rộng của hệ thống. Mỗi shard sẽ được phân phối trên các máy chủ khác nhau, giúp tăng khả năng xử lý dữ liệu lớn một cách hiệu quả.
+
+- **Ví dụ thực tế:**
+
+Coca-Cola sử dụng kiến trúc Sharding trong MongoDB để quản lý dữ liệu khổng lồ từ các chiến dịch quảng cáo và các tương tác khách hàng trực tuyến toàn cầu, đảm bảo hiệu suất cao và đáp ứng nhanh chóng ngay cả khi lượng người dùng tăng vọt.
+- **Aggregation Framework (Khung xử lý tập hợp):** Đây là công cụ mạnh mẽ trong MongoDB giúp xử lý các tập hợp dữ liệu lớn và phức tạp. Aggregation Framework được sử dụng rộng rãi trong các ứng dụng phân tích dữ liệu mà không cần đưa dữ liệu ra ngoài cơ sở dữ liệu.
+
+- **Ví dụ thực tế:**
+
+- Các nền tảng thương mại điện tử như Walmart sử dụng Aggregation Framework để thực hiện phân tích dữ liệu khách hàng và hàng hóa, giúp tối ưu hóa quy trình bán hàng và quản lý kho hiệu quả hơn.
+**Kiến trúc phổ biến nhất:**
+- Trong thực tế, Replica Set là kiến trúc được sử dụng nhiều nhất. Với khả năng đảm bảo tính sẵn sàng và khả năng khôi phục dữ liệu nhanh chóng khi gặp sự cố, nó phù hợp với các hệ thống cần tính liên tục và ổn định. Ví dụ, các công ty như MetLife đã triển khai Replica Set để đảm bảo hệ thống của họ không bị gián đoạn trong quá trình phục vụ khách hàng.
+
+## 2. Quản lý dữ liệu của Document trong MongoDB
+MongoDB quản lý dữ liệu theo mô hình Document-Oriented (hướng tài liệu), với các tài liệu được lưu trữ dưới dạng BSON (Binary JSON), cho phép lưu trữ linh hoạt, dễ dàng quản lý dữ liệu phi cấu trúc hoặc dữ liệu có cấu trúc phức tạp.
+
+### 2.1. Cách lưu trữ dữ liệu
+- Document (Tài liệu): Tài liệu là đơn vị lưu trữ cơ bản, giống như một hàng trong cơ sở dữ liệu quan hệ nhưng linh hoạt hơn, với khả năng lưu trữ các mảng, đối tượng nhúng, và các kiểu dữ liệu khác nhau. Điều này giúp MongoDB phù hợp với các loại dữ liệu không cố định.
+Ví dụ: Một document có thể chứa thông tin khách hàng và đơn hàng của họ mà không cần phải tạo các bảng liên kết như trong RDBMS.
+### 2.2. Quản lý Collections
+- Collection (Bộ sưu tập): Các document được lưu trữ trong collections, tương đương với các bảng trong hệ thống quan hệ. Tuy nhiên, các document trong cùng một collection không cần phải có cùng cấu trúc hoặc các kiểu dữ liệu giống nhau, tạo sự linh hoạt lớn hơn.
+Ví dụ: Trong một collection chứa thông tin về sản phẩm, bạn có thể lưu trữ dữ liệu cho các loại sản phẩm khác nhau mà không cần tuân theo một cấu trúc cố định.
+### 2.3. Cập nhật và Quản lý document
+- MongoDB cung cấp nhiều cách để quản lý dữ liệu trong document thông qua các thao tác CRUD (Create, Read, Update, Delete). Một số tính năng cụ thể:
+
+- Insert (Thêm dữ liệu): Thêm tài liệu mới vào collection. MongoDB tự động sinh khóa chính _id cho mỗi document để đảm bảo duy nhất.
+
+Ví dụ:
+```
+db.products.insert({
+  name: "Laptop",
+  brand: "Dell",
+  price: 1200
+})
+```
+- Update (Cập nhật dữ liệu): MongoDB cho phép cập nhật toàn bộ tài liệu hoặc chỉ cập nhật từng trường cụ thể. Điều này giúp cải thiện hiệu suất vì chỉ các trường cần thiết được thay đổi mà không cần ghi đè toàn bộ tài liệu.
+
+Ví dụ: Cập nhật giá của sản phẩm:
+``` 
+db.products.update({ name: "Laptop" }, { $set: { price: 1100 } }) 
+```
+- Delete (Xóa dữ liệu): Cho phép xóa tài liệu dựa trên điều kiện.
+
+Ví dụ: Xóa một sản phẩm dựa trên ID:
+```
+db.products.remove({ _id: ObjectId("60e8bc1") })
+
+```
+### 2.4. Indexing (Chỉ mục)
+MongoDB cho phép tạo chỉ mục để tăng tốc độ truy vấn trên các trường cụ thể, cải thiện hiệu năng khi làm việc với các tập dữ liệu lớn.
+
+Ví dụ:
+
+```
+db.products.createIndex({ name: 1 })
+
+```
+
+### 2.5. Replication và Sharding
+- Replication (Nhân bản): MongoDB sử dụng replication để đảm bảo tính sẵn sàng và khôi phục dữ liệu. Một bản sao chính (primary) và nhiều bản sao phụ (secondary) được duy trì đồng bộ.
+- Sharding (Phân mảnh dữ liệu): Dữ liệu lớn được chia thành nhiều phần và phân phối qua các shard, giúp hệ thống mở rộng và duy trì hiệu suất tốt hơn.
+### 2.6. Aggregation (Tập hợp dữ liệu)
+- MongoDB hỗ trợ Aggregation Framework để xử lý dữ liệu phức tạp, chẳng hạn như lọc, nhóm, và sắp xếp dữ liệu trực tiếp trong cơ sở dữ liệu mà không cần phải lấy tất cả dữ liệu ra bên ngoài.
+
+Ví dụ:
+```
+db.sales.aggregate([
+  { $match: { status: "completed" } },
+  { $group: { _id: "$customer_id", total: { $sum: "$amount" } } }
+])
+```
+- Cách quản lý dữ liệu trong MongoDB dựa trên tính linh hoạt của các document, cho phép lưu trữ và xử lý dữ liệu phi cấu trúc hiệu quả. Các công cụ mạnh mẽ như chỉ mục, phân mảnh và aggregation hỗ trợ quản lý dữ liệu với khối lượng lớn và tốc độ cao, phù hợp với các ứng dụng hiện đại.
+
+
+## 3. Cách Collection tương tác với Document trong MongoDB
+- Trong MongoDB, Collections và Documents tương tác với nhau theo mô hình cơ sở dữ liệu hướng tài liệu (Document-Oriented), giúp quản lý dữ liệu linh hoạt và tối ưu hóa cho các hệ thống phi cấu trúc.
+
+### 3.1. Document trong Collection
+- Document là đơn vị cơ bản lưu trữ dữ liệu trong MongoDB. Mỗi document chứa dữ liệu dưới dạng BSON (Binary JSON) và có thể bao gồm nhiều trường (fields) khác nhau với cấu trúc linh hoạt.
+- Mỗi document trong MongoDB tương đương với một hàng trong cơ sở dữ liệu quan hệ, nhưng không cần tuân thủ một lược đồ cứng nhắc (schema-less), nghĩa là mỗi document trong cùng một collection có thể có cấu trúc khác nhau.
+### 3.2. Collection lưu trữ Document
+- Collection là tập hợp các document. Nó có chức năng tương đương với bảng (table) trong cơ sở dữ liệu quan hệ, nhưng các document trong collection không cần phải có cùng một cấu trúc hoặc kiểu dữ liệu.
+Ví dụ: Trong một collection customers, một document có thể chỉ chứa tên và email của khách hàng, trong khi một document khác có thể bao gồm thêm địa chỉ và số điện thoại.
+### 3.3. Tương tác giữa Collection và Document qua CRUD
+- MongoDB cung cấp các thao tác CRUD (Create, Read, Update, Delete) để tương tác với document trong collection:
+
+- Create (Thêm tài liệu mới):
+
+- Document được thêm vào collection với một khoá chính mặc định là _id.
+Ví dụ:
+```
+db.customers.insert({ name: "Nguyen dien sy dao", email: "24410013@ms.uit.edu.vn" })
+```
+- Read (Đọc dữ liệu):
+
+- Truy vấn document từ collection dựa trên các tiêu chí cụ thể.
+Ví dụ: Lấy tất cả khách hàng có tên là "Nguyen dien sy dao":
+```
+db.customers.find({ name: "Nguyen dien sy dao" })
+```
+
+- Update (Cập nhật dữ liệu):
+
+- Cập nhật các trường cụ thể trong document mà không cần cập nhật toàn bộ tài liệu.
+Ví dụ: Cập nhật email của một khách hàng:
+```
+db.customers.update({ name: "Nguyen dien sy dao" }, { $set: { email: "24410013@ms.uit.edu.vn" } })
+```
+- Delete (Xóa tài liệu):
+
+- Xóa document khỏi collection dựa trên điều kiện nhất định.
+Ví dụ: Xóa khách hàng có _id là "12345":
+
+```
+db.customers.remove({ _id: ObjectId("12345") })
+```
+
+### 3.4. Schema Validation trong Collection
+- Mặc dù MongoDB không yêu cầu schema cố định, nhưng người dùng có thể thiết lập Schema Validation để áp dụng các quy tắc trên dữ liệu trong collection. Điều này đảm bảo tính toàn vẹn của dữ liệu.
+
+Ví dụ: Xác thực rằng một document trong collection phải có trường "email" theo định dạng hợp lệ.
+### 3.5. Indexes trong Collection
+MongoDB cho phép tạo chỉ mục (index) trên các trường trong document để tối ưu hóa truy vấn và cải thiện hiệu năng.
+
+Ví dụ:
+
+```
+db.customers.createIndex({ email: 1 })
+```
+
+### 3.6. Aggregation Framework
+- *Aggregation Framework* cho phép thực hiện các phép tính phức tạp trên document trong collection mà không cần phải lấy tất cả dữ liệu ra khỏi cơ sở dữ liệu.
+
+Ví dụ: Tính tổng số đơn hàng của mỗi khách hàng:
+
+```
+db.orders.aggregate([
+  { $group: { _id: "$customerId", total: { $sum: "$amount" } } }
+])
+```
+
+
+
 
 ## Nguồn tham khảo
+
+- [MongoDB Replica Set](https://www.mongodb.com/docs/manual/replication/)
+- [MongoDB Sharding](https://www.mongodb.com/docs/manual/sharding/)
+- [MongoDB Customer Stories](https://www.mongodb.com/solutions/customer-case-studies)
 
 - [MongoDB Official Website](https://www.mongodb.com/).
 - [MongoDB Wiki trên GitHub](https://github.com/mongodb/mongo/wiki).
