@@ -134,9 +134,9 @@ Ví dụ: Một document có thể trông như sau:
 
 ```
 {
-  "name": "Alice",
-  "age": 28,
-  "email": "alice@example.com"
+  "name": "Nguyen Dien Sy dao",
+  "age": 25,
+  "email": "24410013@ms.uit.edu.vn"
 }
 ```
 
@@ -195,13 +195,13 @@ Dưới đây là một ví dụ về cách dữ liệu được lưu trữ dư�
 Dữ liệu JSON
 ```
 {
-  "name": "Alice",
-  "age": 30,
+  "name": "Nguyen Dien Sỹ Dao",
+  "age": 25,
   "isStudent": false,
-  "courses": ["Mathematics", "Computer Science"],
+  "courses": ["Quan ly thong tin", "He dieu hanh"],
   "address": {
-    "street": "123 Elm Street",
-    "city": "Springfield",
+    "street": "123A",
+    "city": "Ho Chi Minh",
     "postalCode": "12345"
   }
 }
@@ -218,9 +218,13 @@ Dữ liệu BSON của cùng một đối tượng sẽ được lưu trữ dư�
 + Name: "Alice" (dưới dạng chuỗi nhị phân với chỉ định kiểu dữ liệu).
 + Age: 30 (dưới dạng số nguyên 32-bit).
 + IsStudent: false (dưới dạng giá trị boolean).
-+ Courses: ["Mathematics", "Computer Science"] (dưới dạng mảng chuỗi nhị phân).
++ Courses: ["Quan ly thong tin", "He dieu hanh"] (dưới dạng mảng chuỗi nhị phân).
 + Address: {
-+ Street: "123 Elm Street" (dưới dạng chuỗi nhị phân).
+    "street": "123A",
+    "city": "Ho Chi Minh",
+    "postalCode": "12345"
+  }
++ Street: "123A" (dưới dạng chuỗi nhị phân).
 + City: "Springfield" (dưới dạng chuỗi nhị phân).
 + PostalCode: "12345" (dưới dạng chuỗi nhị phân).
 
@@ -238,7 +242,6 @@ Dữ liệu BSON của cùng một đối tượng sẽ được lưu trữ dư�
 - Hiệu suất: BSON cải thiện hiệu suất truy xuất và lưu trữ dữ liệu, đặc biệt trong các hệ thống như MongoDB, nhờ vào các phép toán nhị phân và khả năng lưu trữ hiệu quả.
 
 
-<!-- Phần chưa thực hiện  -->
 ## 3. So sánh `MongoDB` với SQL
 - MongoDB và SQL (Structured Query Language) đại diện cho hai loại hệ quản trị cơ sở dữ liệu khác nhau: NoSQL và quan hệ. MongoDB là một cơ sở dữ liệu NoSQL, trong khi SQL liên quan đến các hệ quản trị cơ sở dữ liệu quan hệ (RDBMS). Mặc dù cả hai đều được sử dụng để lưu trữ và quản lý dữ liệu, chúng có nhiều điểm khác biệt cơ bản về thiết kế và chức năng. Báo cáo này sẽ phân tích những điểm khác biệt chính giữa MongoDB và các hệ RDBMS, đặc biệt tập trung vào khả năng mở rộng và tính không cần schema của MongoDB.
 
@@ -302,23 +305,23 @@ Dữ liệu BSON của cùng một đối tượng sẽ được lưu trữ dư�
 # II. KIẾN THỨC CƠ BẢN VỀ `MONGODB`
 ## 1. Nghiên cứu kiến trúc tổng quan của MongoDB
 
-MongoDB sử dụng một số kiến trúc cơ bản để quản lý và mở rộng dữ liệu trong các hệ thống lớn. Dưới đây là các kiến trúc phổ biến:
+- MongoDB sử dụng một số kiến trúc cơ bản để quản lý và mở rộng dữ liệu trong các hệ thống lớn. Dưới đây là các kiến trúc phổ biến:
 
-- **Replica Set (Nhân bản dữ liệu):** Đây là kiến trúc quan trọng giúp đảm bảo tính khả dụng cao bằng cách tạo nhiều bản sao của dữ liệu trên các máy chủ khác nhau. Nếu primary node gặp sự cố, một secondary node có thể tự động thay thế để tiếp tục các thao tác. Điều này đảm bảo không bị gián đoạn khi xảy ra lỗi hệ thống.
+  - **Replica Set (Nhân bản dữ liệu):** Đây là kiến trúc quan trọng giúp đảm bảo tính khả dụng cao bằng cách tạo nhiều bản sao của dữ liệu trên các máy chủ khác nhau. Nếu primary node gặp sự cố, một secondary node có thể tự động thay thế để tiếp tục các thao tác. Điều này đảm bảo không bị gián đoạn khi xảy ra lỗi hệ thống.
 
-- **Ví dụ thực tế:**
+    - **Ví dụ thực tế:**
 
-- eBay sử dụng Replica Set để đảm bảo hoạt động ổn định của cơ sở dữ liệu toàn cầu, giúp họ xử lý lượng giao dịch khổng lồ hàng ngày mà không lo ngại về việc ngừng hoạt động khi có sự cố tại một máy chủ.
-- **Sharding (Phân mảnh dữ liệu):** Kiến trúc này cho phép MongoDB phân chia dữ liệu thành nhiều phần nhỏ gọi là shards, giúp cải thiện hiệu năng và khả năng mở rộng của hệ thống. Mỗi shard sẽ được phân phối trên các máy chủ khác nhau, giúp tăng khả năng xử lý dữ liệu lớn một cách hiệu quả.
+      - `eBay` sử dụng `Replica Set` để đảm bảo hoạt động ổn định của cơ sở dữ liệu toàn cầu, giúp họ xử lý lượng giao dịch khổng lồ hàng ngày mà không lo ngại về việc ngừng hoạt động khi có sự cố tại một máy chủ.
+  - **Sharding (Phân mảnh dữ liệu):** Kiến trúc này cho phép MongoDB phân chia dữ liệu thành nhiều phần nhỏ gọi là shards, giúp cải thiện hiệu năng và khả năng mở rộng của hệ thống. Mỗi shard sẽ được phân phối trên các máy chủ khác nhau, giúp tăng khả năng xử lý dữ liệu lớn một cách hiệu quả.
 
-- **Ví dụ thực tế:**
+    - **Ví dụ thực tế:**
 
-Coca-Cola sử dụng kiến trúc Sharding trong MongoDB để quản lý dữ liệu khổng lồ từ các chiến dịch quảng cáo và các tương tác khách hàng trực tuyến toàn cầu, đảm bảo hiệu suất cao và đáp ứng nhanh chóng ngay cả khi lượng người dùng tăng vọt.
-- **Aggregation Framework (Khung xử lý tập hợp):** Đây là công cụ mạnh mẽ trong MongoDB giúp xử lý các tập hợp dữ liệu lớn và phức tạp. Aggregation Framework được sử dụng rộng rãi trong các ứng dụng phân tích dữ liệu mà không cần đưa dữ liệu ra ngoài cơ sở dữ liệu.
+      - `Coca-Cola` sử dụng kiến trúc `Sharding` trong MongoDB để quản lý dữ liệu khổng lồ từ các chiến dịch quảng cáo và các tương tác khách hàng trực tuyến toàn cầu, đảm bảo hiệu suất cao và đáp ứng nhanh chóng ngay cả khi lượng người dùng tăng vọt.
+  - **Aggregation Framework (Khung xử lý tập hợp):** Đây là công cụ mạnh mẽ trong MongoDB giúp xử lý các tập hợp dữ liệu lớn và phức tạp. `Aggregation Framework` được sử dụng rộng rãi trong các ứng dụng phân tích dữ liệu mà không cần đưa dữ liệu ra ngoài cơ sở dữ liệu.
 
-- **Ví dụ thực tế:**
+    - **Ví dụ thực tế:**
 
-- Các nền tảng thương mại điện tử như Walmart sử dụng Aggregation Framework để thực hiện phân tích dữ liệu khách hàng và hàng hóa, giúp tối ưu hóa quy trình bán hàng và quản lý kho hiệu quả hơn.
+      - Các nền tảng thương mại điện tử như `Walmart` sử dụng `Aggregation Framework` để thực hiện phân tích dữ liệu khách hàng và hàng hóa, giúp tối ưu hóa quy trình bán hàng và quản lý kho hiệu quả hơn.
 **Kiến trúc phổ biến nhất:**
 - Trong thực tế, Replica Set là kiến trúc được sử dụng nhiều nhất. Với khả năng đảm bảo tính sẵn sàng và khả năng khôi phục dữ liệu nhanh chóng khi gặp sự cố, nó phù hợp với các hệ thống cần tính liên tục và ổn định. Ví dụ, các công ty như MetLife đã triển khai Replica Set để đảm bảo hệ thống của họ không bị gián đoạn trong quá trình phục vụ khách hàng.
 
@@ -450,11 +453,56 @@ db.orders.aggregate([
 ])
 ```
 
+## 4. Lý do MongoDB sử dụng BSON
+### 4.1. Hiệu suất cao và Tối ưu hóa bộ nhớ
+- BSON (Binary JSON) được MongoDB lựa chọn làm định dạng lưu trữ chính không chỉ vì nó giúp tăng tốc độ xử lý dữ liệu mà còn do khả năng tối ưu hóa bộ nhớ của nó. BSON mã hóa dữ liệu dưới dạng nhị phân, giúp dữ liệu có thể được tuần tự hóa (serialization) nhanh chóng, dễ dàng và gọn gàng hơn so với JSON thuần túy.
 
+- Một trong những vấn đề của JSON là tính thiếu tối ưu trong việc lưu trữ. JSON sử dụng cấu trúc chuỗi văn bản (text-based) để biểu diễn dữ liệu, điều này tạo ra nhiều dữ liệu không cần thiết khi lưu trữ hoặc truyền tải. Ví dụ: trong JSON, mỗi trường của tài liệu đều phải chứa tên thuộc tính bằng chuỗi, điều này dẫn đến việc tiêu tốn nhiều băng thông và dung lượng hơn.
+
+- BSON khắc phục được vấn đề này bằng cách sử dụng dạng nhị phân để lưu trữ dữ liệu, giúp:
+
+  - Giảm kích thước tệp khi truyền qua mạng.
+  - Nén dữ liệu tốt hơn, từ đó tiết kiệm dung lượng đĩa.
+  - Tăng tốc độ tuần tự hóa và giải tuần tự hóa dữ liệu (deserialization).
+### 4.2. Hỗ trợ kiểu dữ liệu phong phú
+- Một yếu tố khác biệt quan trọng của BSON so với JSON là hỗ trợ đa dạng kiểu dữ liệu. JSON cơ bản chỉ hỗ trợ các kiểu dữ liệu đơn giản như chuỗi (string), số (number), mảng (array), boolean, và null. Điều này tạo ra giới hạn khi làm việc với các kiểu dữ liệu phức tạp, ví dụ như:
+
+  - Dữ liệu thời gian thực (timestamps): JSON không có kiểu dữ liệu ngày và giờ chuẩn, buộc các hệ thống phải xử lý bằng cách dùng chuỗi hoặc số nguyên, điều này không tối ưu cho truy vấn và xử lý.
+  - Số lớn (64-bit integers): JSON bị giới hạn bởi chuẩn IEEE 754 nên không thể xử lý số nguyên lớn hơn 53 bit chính xác, trong khi BSON hỗ trợ Int64 và Decimal128, giúp làm việc với dữ liệu tài chính hoặc khoa học một cách hiệu quả.
+- BSON bổ sung nhiều kiểu dữ liệu bổ sung như:
+
+  - `Date`: Hỗ trợ đầy đủ kiểu ngày giờ.
+  - `Binary data`: Hỗ trợ dữ liệu nhị phân, điều này rất cần thiết cho việc lưu trữ các tệp dữ liệu lớn như hình ảnh, file âm thanh hoặc mã hóa bảo mật.
+  - `Embedded documents`: Khả năng lưu trữ các tài liệu lồng nhau (nested documents) mà không làm giảm hiệu năng.
+Điều này giúp MongoDB có thể xử lý nhiều loại dữ liệu phức tạp hơn, từ đó đáp ứng được yêu cầu của các hệ thống hiện đại với khối lượng và kiểu dữ liệu đa dạng.
+
+### 4.3. Khả năng phân tích và truy vấn nhanh chóng
+- BSON được tối ưu hóa cho việc truy xuất một phần tài liệu (partial retrieval), giúp giảm thiểu tài nguyên khi xử lý dữ liệu. Điều này cực kỳ quan trọng trong môi trường cơ sở dữ liệu lớn, nơi MongoDB thường xuyên được sử dụng để lưu trữ hàng triệu đến hàng tỷ bản ghi.
+
+- Trong một hệ thống cơ sở dữ liệu truyền thống, khi thực hiện truy vấn, toàn bộ tài liệu cần được tải vào bộ nhớ, điều này gây ra sự chậm trễ và tốn tài nguyên. Với BSON, MongoDB có thể chỉ cần tải phần dữ liệu được yêu cầu, nhờ vậy:
+
+  - Giảm thiểu lượng tài nguyên xử lý cần thiết (RAM, CPU).
+  - Tăng tốc độ truy vấn và cải thiện hiệu năng tổng thể.
+- Hơn nữa, BSON có cấu trúc tự mô tả, tức là nó không chỉ lưu trữ dữ liệu mà còn lưu trữ loại dữ liệu của các trường. Điều này cho phép MongoDB truy vấn, sắp xếp, và lọc dữ liệu một cách hiệu quả mà không cần phải xử lý lại toàn bộ cấu trúc dữ liệu.
+
+### 4.4. Tính mở rộng và linh hoạt
+- Trong các hệ quản trị cơ sở dữ liệu quan hệ (RDBMS), dữ liệu được lưu trữ trong các bảng với cấu trúc cứng nhắc, yêu cầu xác định trước lược đồ dữ liệu (schema). Điều này gây khó khăn trong việc thay đổi hoặc mở rộng cấu trúc dữ liệu khi hệ thống phát triển.
+
+- BSON, ngược lại, có tính linh hoạt cao vì không cần lược đồ cố định. Mỗi tài liệu trong MongoDB có thể có cấu trúc khác nhau, cho phép dễ dàng mở rộng khi thêm các thuộc tính mới mà không cần thay đổi cơ sở dữ liệu hiện có. Nhờ vào cấu trúc tự mô tả, mỗi trường trong tài liệu BSON đều bao gồm thông tin về kiểu dữ liệu của nó, giúp quản lý dữ liệu một cách tự động và dễ dàng.
+
+- Điều này rất quan trọng đối với các ứng dụng web hoặc mobile hiện đại, nơi yêu cầu phát triển và thay đổi nhanh chóng, cần linh hoạt trong việc lưu trữ và quản lý dữ liệu.
+
+### 4.5. Khả năng tương thích cao với JSON
+- Cuối cùng, mặc dù BSON là định dạng nhị phân, nó vẫn giữ được sự dễ dàng trong việc thao tác với JSON. Do BSON là một mở rộng của JSON, các lập trình viên có thể dễ dàng sử dụng MongoDB mà không cần phải học thêm một ngôn ngữ mới. Điều này giúp tăng tốc độ phát triển, đồng thời vẫn đảm bảo hiệu quả khi lưu trữ và truyền dữ liệu.
+
+- JSON vẫn là định dạng phổ biến trong các API web và các ứng dụng khác, và việc BSON tương thích với JSON giúp MongoDB dễ dàng tích hợp với các hệ thống hiện có.
+
+**Kết luận:**
+- MongoDB lựa chọn BSON vì khả năng tối ưu dung lượng, tốc độ xử lý nhờ mã hóa nhị phân, và hỗ trợ nhiều kiểu dữ liệu phức tạp mà JSON không đáp ứng được. BSON cải thiện hiệu suất truy vấn và giảm thiểu tài nguyên, rất quan trọng trong các hệ thống xử lý khối lượng dữ liệu lớn. Đồng thời, tính tự mô tả của BSON giúp MongoDB dễ dàng mở rộng và thích ứng với thay đổi mà không cần tái cấu trúc dữ liệu. Khả năng tương thích với JSON giúp BSON trở thành lựa chọn mạnh mẽ và thân thiện với nhà phát triển.
 
 
 ## Nguồn tham khảo
-
+- [MongoDB Manual: BSON Types](https://www.mongodb.com/docs/manual/reference/bson-types/)
 - [MongoDB Replica Set](https://www.mongodb.com/docs/manual/replication/)
 - [MongoDB Sharding](https://www.mongodb.com/docs/manual/sharding/)
 - [MongoDB Customer Stories](https://www.mongodb.com/solutions/customer-case-studies)
